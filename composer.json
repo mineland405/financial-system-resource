@@ -1,0 +1,19 @@
+{
+    "name": "mineland405/financial-system-resource",
+    "description": "Resource for Financial System project",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Mineland405\\FinancialSystemResource\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ho Viet Vu Thanh",
+            "email": "mineland405@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
