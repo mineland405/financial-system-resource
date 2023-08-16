@@ -6,7 +6,10 @@
     "autoload": {
         "psr-4": {
             "Mineland405\\FinancialSystemResource\\": "src/"
-        }
+        },
+        "files": [
+            "src/Http/Helpers/Autoload.php"
+        ]
     },
     "authors": [
         {
