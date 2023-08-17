@@ -4,7 +4,7 @@ use Mineland405\FinancialSystemResource\Models\Order;
 
 if(!function_exists('_avatar')) {
     /**
-     * Generate member avatar string
+     * Generate member avatar string on Main Page
      * If member has not avatar, return default image
      */
     function _avatar($avatar) {
@@ -12,6 +12,19 @@ if(!function_exists('_avatar')) {
             return asset('images/empty.jpg');
         else
             return asset('storage/' . $avatar);
+    }
+}
+
+if(!function_exists('_member_avatar')) {
+    /**
+     * Generate member avatar string on Admin Page
+     * If member has not avatar, return default image
+     */
+    function _member_avatar($avatar) {
+        if(empty($avatar))
+            return config('app.main_url') . '/images/empty.jpg';
+        else
+            return config('app.main_url') . '/storage/' . $avatar;
     }
 }
 

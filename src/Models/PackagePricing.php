@@ -9,6 +9,8 @@ class PackagePricing extends Model
 {
     use HasFactory;
 
+    protected $connection = 'mysql_main';
+
     protected $table = 'package_pricing';
 
     protected $packageTable;

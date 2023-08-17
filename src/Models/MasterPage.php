@@ -68,6 +68,6 @@ class MasterPage extends Model
 
     public function owner()
     {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->hasOne(Member::class, 'id', 'user_id');
     }
 }

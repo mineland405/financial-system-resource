@@ -63,21 +63,7 @@ class PointHistory extends Model
      */
     public function order()
     {
-        if(in_array($this->source, ['pay', 'cashback']))
-            return $this->hasOne(Order::class, 'id', 'order_id');
-
-        return $this;
-    }
-
-    /**
-     * Relationship to point_orders table by point_order_id
-     */
-    public function pointOrder()
-    {
-        if(in_array($this->source, ['recharge']))
-            return $this->hasOne(PointOrder::class, 'id', 'point_order_id');
-
-        return $this;
+        return $this->hasOne(Order::class, 'id', 'order_id');
     }
 
     /**
@@ -85,10 +71,7 @@ class PointHistory extends Model
      */
     public function networkUser()
     {
-        if(in_array($this->source, ['commission']))
-            return $this->hasOne(User::class, 'id', 'network_user_id');
-
-        return $this;
+        return $this->hasOne(Member::class, 'id', 'network_user_id');
     }
 
     /**
@@ -100,6 +83,7 @@ class PointHistory extends Model
     public function filter()
     {
         $userTable = (new Member)->getTable();
+
         // $orderTable
         $query = $this->join($userTable, "{$this->table}.user_id", "{$userTable}.id");
 

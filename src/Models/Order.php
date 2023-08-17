@@ -2,6 +2,7 @@
 
 namespace Mineland405\FinancialSystemResource\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -120,7 +121,7 @@ class Order extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->hasOne(Member::class, 'id', 'user_id');
     }
 
     public function package()

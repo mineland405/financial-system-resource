@@ -23,7 +23,7 @@ if(!function_exists('_is_master_page')) {
      * Check if current url is a master page url
      */
     function _is_master_page() {
-        return request()->is(config('app.master_page_path') . '/*');
+        return request()->is(config('app.path.master') . '/*');
     }
 }
 

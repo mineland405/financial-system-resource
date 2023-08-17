@@ -14,6 +14,8 @@ class Admin extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasRoles;
 
+    protected $connection = 'mysql_admin';
+
     protected $perPage = 50;
 
     /**
