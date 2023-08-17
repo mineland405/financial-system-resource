@@ -1,16 +1,24 @@
 <?php
 
-namespace Database\Factories;
+namespace Mineland405\FinancialSystemResource\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
+use Mineland405\FinancialSystemResource\Models\Admin;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\Mineland405\FinancialSystemResource\Models\Admin>
  */
 class AdminFactory extends Factory
 {
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Admin::class;
+
     /**
      * Define the model's default state.
      *
