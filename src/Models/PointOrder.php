@@ -5,6 +5,7 @@ namespace Mineland405\FinancialSystemResource\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Mineland405\FinancialSystemResource\Enums\CoinPaymentsStatus;
 use Mineland405\FinancialSystemResource\Enums\PayPalStatus;
+use Mineland405\FinancialSystemResource\Enums\PointOrderPaymentMethod;
 use Mineland405\FinancialSystemResource\Enums\PointOrderSource;
 
 class PointOrder extends Model
@@ -34,6 +35,16 @@ class PointOrder extends Model
     public function getCoinpaymentsStatusLabelAttribute()
 	{
 		return CoinPaymentsStatus::options()[$this->coinpayments_status] ?? NULL;
+	}
+
+    public function getPaymentMethodLabelAttribute()
+	{
+		return PointOrderPaymentMethod::options()[$this->payment_method] ?? NULL;
+	}
+
+    public function getSourceLabelAttribute()
+	{
+		return PointOrderSource::options()[$this->source];
 	}
 
 

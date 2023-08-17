@@ -6,12 +6,14 @@ enum PointOrderPaymentMethod: string
 {
     case PAYPAL = 'paypal';
     case COINPAYMENTS = 'coinpayments';
+    case OTHER = 'manual';
 
     public function label(): string
     {
         return match($this) {
             self::PAYPAL => 'PayPal',
             self::COINPAYMENTS => 'CoinPayments',
+            self::OTHER => 'Other',
         };
     }
 
