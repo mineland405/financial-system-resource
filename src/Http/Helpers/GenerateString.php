@@ -55,45 +55,6 @@ if(!function_exists('_get_referral_full_link')) {
     }
 }
 
-if(!function_exists('_payment_method_label')) {
-    /**
-     * Return order payment method label
-     */
-    function _payment_method_label($method) {
-        $order = new Order();
-        return $order::PAYMENT_METHODS[$method];
-    }
-}
-
-if(!function_exists('_order_status_label')) {
-    /**
-     * Return order status label
-     */
-    function _order_status_label($method) {
-        $order = new Order();
-        return $order::STATUS[$method];
-    }
-}
-
-if(!function_exists('_order_status_description')) {
-    /**
-     * Return order status description
-     */
-    function _order_status_description($method) {
-        $order = new Order();
-        return $order::STATUS_DESCRIPTION[$method];
-    }
-}
-
-if(!function_exists('_order_type_label')) {
-    /**
-     * Return order type label
-     */
-    function _order_type_label($type) {
-        return $type === 'new' ? 'Buy new Package' : 'Extend Package using time';
-    }
-}
-
 if(!function_exists('_main_route')) {
     /**
      * Return Admin Site URL

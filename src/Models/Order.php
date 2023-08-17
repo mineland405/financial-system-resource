@@ -5,6 +5,10 @@ namespace Mineland405\FinancialSystemResource\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Mineland405\FinancialSystemResource\Enums\OrderPaymentMethod;
+use Mineland405\FinancialSystemResource\Enums\OrderStatus;
+use Mineland405\FinancialSystemResource\Enums\OrderStatusDescription;
+use Mineland405\FinancialSystemResource\Enums\OrderType;
 
 class Order extends Model
 {
@@ -28,45 +32,6 @@ class Order extends Model
         'payment_expires_at',
         'status',
         'total',
-    ];
-
-    const STATUS = [
-        'ordered' => 'Ordered', // Đang thực hiện
-        'customer_paid' => 'Customer Paid', // Đang thực hiện
-        'paid' => 'Paid', // Đang thực hiện
-        'processing' => 'Processing', // Đang xử lý kỹ thuật
-        'completed' => 'Completed', // Hoàn tất
-        'cancelled' => 'Cancelled', // Không thành công
-        'failed' => 'Payment Failed' // Không thành công
-    ];
-
-    const STATUS_DESCRIPTION = [
-        'ordered' => 'Order Made', // Đã thực hiện mua hàng
-        'customer_paid' => 'Manually paid through the bank', // Khách hàng đã thanh toán thủ công thông qua ngân hàng
-        'paid' => 'Payment Confirmed', // Xác nhận đã thanh toán
-        'processing' => 'The technical team has received and processed', // Đội ngũ kỹ thuật đã tiếp nhận xử lý
-        'completed' => 'Order Completed', // Hoàn tất
-        'cancelled' => 'Order Cancelled', // Không thành công
-        'failed' => 'Order has expired' // Không thành công
-    ];
-
-    const STATUS_GROUP = [
-        'ordered' => ['ordered', 'customer_paid', 'paid'], // Đang thực hiện
-        'processing' => ['processing'], // Đang xử lý kỹ thuật
-        'completed' => ['completed'], // Hoàn tất
-        'failed' => ['cancelled', 'failed'] // Không thành công
-    ];
-
-    const STATUS_GROUP_LABEL = [
-        'ordered' => 'Waiting For Confirmation',
-        'processing' => 'Technical Processing',
-        'completed' => 'Completed',
-        'failed' => 'Failed'
-    ];
-
-    const PAYMENT_METHODS = [
-        'manual' => 'Manual Transfer',
-        'point' => 'Pay with Point'
     ];
 
     public function filter()
@@ -111,6 +76,44 @@ class Order extends Model
     public function getExpiresAt()
     {
         return Carbon::now()->addDay();
+    }
+
+    /**
+     * -------------------------------------------------------
+     * Attributes
+     * -------------------------------------------------------
+     */
+
+    public function getPaymentMethodLabelAttribute()
+    {
+        return OrderPaymentMethod::options()[$this->payment_method];
+    }
+
+    public function getTypeLabelAttribute()
+    {
+        return OrderType::options()[$this->type];
+    }
+
+    public function getStatusLabelAttribute()
+    {
+        return OrderStatus::options()[$this->status];
+    }
+
+    public function getStatusDescriptionAttribute()
+    {
+        return OrderStatusDescription::options()[$this->status];
+    }
+
+    public function getStatusGroupAttribute()
+    {
+        if(in_array($this->status, [OrderStatus::ORDERED->value, OrderStatus::CUSTOMER_PAID->value, OrderStatus::PAID->value]))
+            return OrderStatus::ORDERED->value;
+        if(in_array($this->status, [OrderStatus::PROCESSING->value]))
+            return OrderStatus::PROCESSING->value;
+        if(in_array($this->status, [OrderStatus::COMPLETED->value]))
+            return OrderStatus::COMPLETED->value;
+        if(in_array($this->status, [OrderStatus::CANCELLED->value, OrderStatus::FAILED->value]))
+            return OrderStatus::FAILED->value;
     }
 
     /**

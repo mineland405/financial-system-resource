@@ -3,6 +3,9 @@
 namespace Mineland405\FinancialSystemResource\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Mineland405\FinancialSystemResource\Enums\CoinPaymentsStatus;
+use Mineland405\FinancialSystemResource\Enums\PayPalStatus;
+use Mineland405\FinancialSystemResource\Enums\PointOrderSource;
 
 class PointOrder extends Model
 {
@@ -12,27 +15,6 @@ class PointOrder extends Model
 
     protected $table = 'point_orders';
 
-    const SOURCE = [
-        'recharge' => 'Mua qua giao dịch nạp tiền',
-        'commission' => 'Nhận hoa hồng thông qua network',
-        'cashback' => 'Giao dịch hoàn tiền',
-        'pay' => 'Thanh toán mua hàng'
-    ];
-
-    const PAYPAL_STATUS = [
-        'processing' => 'Processing',
-        'completed' => 'Completed',
-        'cancelled' => 'Cancelled',
-    ];
-
-    const COINPAYMENTS_STATUS = [
-        'created' => 'Created',
-        'wait_for_funds' => 'Waiting For Funds',
-        'funds_received' => 'Funds Received',
-        'complete' => 'Complete',
-        'cancelled' => 'Cancelled / Timed Out',
-    ];
-
     /**
      * --------------------------------------------
      * Attributes
@@ -41,8 +23,19 @@ class PointOrder extends Model
 
     public function getIsCommissionAttribute()
 	{
-		return $this->source === 'commission';
+		return $this->source == PointOrderSource::COMMISSION->value;
 	}
+
+    public function getPaypalStatusLabelAttribute()
+	{
+		return PayPalStatus::options()[$this->paypal_status] ?? NULL;
+	}
+
+    public function getCoinpaymentsStatusLabelAttribute()
+	{
+		return CoinPaymentsStatus::options()[$this->coinpayments_status] ?? NULL;
+	}
+
 
     /**
      * --------------------------------------------
