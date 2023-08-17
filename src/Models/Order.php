@@ -16,7 +16,7 @@ class Order extends Model
 
     protected $fillable = [
         'code',
-        'user_id',
+        'member_id',
         'package_id',
         'package_type',
         'package_code',
@@ -119,9 +119,9 @@ class Order extends Model
      * -------------------------------------------------------
      */
 
-    public function user()
+    public function member()
     {
-        return $this->hasOne(Member::class, 'id', 'user_id');
+        return $this->hasOne(Member::class, 'id', 'member_id');
     }
 
     public function package()

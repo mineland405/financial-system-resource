@@ -14,7 +14,7 @@ class Member extends Authenticatable
 
     protected $connection = 'mysql_main';
 
-    protected $table = 'users';
+    protected $table = 'members';
 
     protected $guard = 'master';
 
@@ -120,7 +120,7 @@ class Member extends Authenticatable
      */
 
     /**
-     * This user belong to a Master Page
+     * This member belong to a Master Page
      *
      * @return void
      */
@@ -130,13 +130,13 @@ class Member extends Authenticatable
     }
 
     /**
-     * This user owner a Master Page
+     * This member owner a Master Page
      *
      * @return boolean
      */
     public function hasMasterPage()
     {
-        return $this->hasOne(MasterPage::class, 'user_id', 'id')->whereNull('disabled_at')->whereNull('locked_at')->latestOfMany();
+        return $this->hasOne(MasterPage::class, 'member_id', 'id')->whereNull('disabled_at')->whereNull('locked_at')->latestOfMany();
     }
 
     /**

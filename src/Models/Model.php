@@ -31,6 +31,6 @@ class Model extends BaseModel
 
     public function scopeOfMember($query)
     {
-        return $query->where('user_id', Auth::user()->id);
+        return $query->where('member_id', Auth::user()->id);
     }
 }

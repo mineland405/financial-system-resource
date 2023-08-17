@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Mineland405\FinancialSystemResource\Models\Option;
 
@@ -37,8 +39,8 @@ if(!function_exists('_log_activity')) {
      * Log Activity
      */
     function _log_activity($activity, $data = null) {
-        DB::table('log_activities')->insert([
-            'user_id' => Auth::user()->id,
+        DB::table('activity_logs')->insert([
+            'member_id' => Auth::user()->id,
             'activity' => $activity,
             'data' => $data ? json_encode($data) : null,
             'ip' => request()->ip(),

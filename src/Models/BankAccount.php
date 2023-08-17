@@ -11,5 +11,5 @@ class BankAccount extends Model
 
     protected $connection = 'mysql_main';
 
-    protected $table = 'bank_informations';
+    protected $table = 'bank_accounts';
 }

@@ -11,7 +11,7 @@ class MasterPage extends Model
 
     protected $connection = 'mysql_main';
 
-    protected $table = 'mib_pages';
+    protected $table = 'master_pages';
 
     /**
      * ----------------------------------------------
@@ -68,6 +68,6 @@ class MasterPage extends Model
 
     public function owner()
     {
-        return $this->hasOne(Member::class, 'id', 'user_id');
+        return $this->hasOne(Member::class, 'id', 'member_id');
     }
 }

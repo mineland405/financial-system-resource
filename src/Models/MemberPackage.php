@@ -11,11 +11,11 @@ class MemberPackage extends Model
 
     protected $connection = 'mysql_main';
 
-    protected $table = 'user_packages';
+    protected $table = 'member_packages';
 
-    public function user()
+    public function member()
     {
-        return $this->hasOne(Member::class, 'id', 'user_id');
+        return $this->hasOne(Member::class, 'id', 'member_id');
     }
 
     public function package()
