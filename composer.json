@@ -5,7 +5,9 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Mineland405\\FinancialSystemResource\\": "src/"
+            "Mineland405\\FinancialSystemResource\\": "src/",
+            "Database\\Factories\\": "database/factories",
+            "Database\\Seeder\\": "database/seeders"
         },
         "files": [
             "src/Http/Helpers/Autoload.php"
