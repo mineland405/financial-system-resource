@@ -41,7 +41,7 @@ if(!function_exists('_master_page_id')) {
      * Get id of Master Page
      */
     function _master_page_id() {
-        if(_is_subdomain() && !is_null(_page_id())) {
+        if(_is_subdomain() || !is_null(_page_id())) {
             return MasterPage::isAvailable()->where('page_id', _page_id())->first()->id;
         }
         
@@ -55,6 +55,9 @@ if(!function_exists('_set_default_parameter_url')) {
      */
     function _set_default_parameter_url() {
         $pageId = Route::current()->parameter('pageid');
+        if(!MasterPage::where('page_id', $pageId)->isAvailable()->exists())
+            abort(404);
+
         URL::defaults(['pageid' => $pageId]);
     }
 }

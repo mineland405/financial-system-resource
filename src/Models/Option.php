@@ -20,6 +20,7 @@ class Option extends Model
      */
     protected $fillable = [
         'name',
-        'value'
+        'value',
+        'page_id'
     ];
 }

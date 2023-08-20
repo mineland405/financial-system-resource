@@ -9,7 +9,7 @@ if(!function_exists('_get_option')) {
      * Get Option by name
      */
     function _get_option($name) {
-        return Option::where('name', $name)->first()->value ?? null;
+        return Option::where('name', $name)->ofMasterPage()->first()->value ?? null;
     }
 }
 
@@ -19,8 +19,8 @@ if(!function_exists('_set_option')) {
      */
     function _set_option($name, $value) {
         Option::updateOrCreate(
-            ['name' => $name],
-            ['value' => $value]
+            ['name' => $name, 'page_id' => _master_page_id()],
+            ['value' => $value, 'page_id' => _master_page_id()]
         );
     }
 }
@@ -30,7 +30,7 @@ if(!function_exists('_delete_option')) {
      * Destroy Option
      */
     function _delete_option($name) {
-        Option::where('name', $name)->delete();
+        Option::where('name', $name)->ofMasterPage()->delete();
     }
 }
 

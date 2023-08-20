@@ -28,7 +28,7 @@ class PackagePricing extends Model
 
         if(_is_subdomain()) {
             static::addGlobalScope('master_ib', function (Builder $builder) {
-                $builder->where('page_id', _mib_page_id());
+                $builder->where('page_id', _master_page_id());
             });
         }
     }
@@ -71,7 +71,7 @@ class PackagePricing extends Model
             ->where("p.disabled", false)
             ->where('pp.disabled', false)
             ->whereNull("p.deleted_at")
-            ->where('pp.page_id', _mib_page_id())
+            ->where('pp.page_id', _master_page_id())
             ->where('pp.price', '>', 0)
             ->select('p.*', 'pp.price AS price')
             // ->select('p.*', DB::raw("

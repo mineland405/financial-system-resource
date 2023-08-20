@@ -61,7 +61,7 @@ class Package extends Model
      */
     public function packagePricing(): HasOne
     {
-        return $this->hasOne(PackagePricing::class, 'package_id', 'id')->where('disabled', false)->where('page_id', _mib_page_id());
+        return $this->hasOne(PackagePricing::class, 'package_id', 'id')->where('disabled', false)->where('page_id', _master_page_id());
     }
 
     /**
