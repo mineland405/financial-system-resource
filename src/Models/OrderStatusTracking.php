@@ -3,6 +3,7 @@
 namespace Mineland405\FinancialSystemResource\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 use Mineland405\FinancialSystemResource\Enums\OrderStatus;
 use Mineland405\FinancialSystemResource\Enums\OrderStatusDescription;
 
@@ -17,6 +18,7 @@ class OrderStatusTracking extends Model
     protected $fillable = [
         'admin_id',
         'order_id',
+        'order_type',
         'status'
     ];
 
@@ -33,5 +35,20 @@ class OrderStatusTracking extends Model
     public function getStatusDescriptionAttribute()
     {
         return OrderStatusDescription::options()[$this->status];
+    }
+
+    /**
+     * ---------------------------------------------------------
+     * Func
+     * ---------------------------------------------------------
+     */
+    public function insert($order, $type = 'package', $adminId = NULL)
+    {
+        $record = $this->refresh();
+        $record->admin_id = $adminId;
+        $record->order_id = $order->id;
+        $record->status = $order->status;
+        $record->order_type = $type;
+        $record->save();
     }
 }

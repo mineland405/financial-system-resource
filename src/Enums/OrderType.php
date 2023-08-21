@@ -10,8 +10,8 @@ enum OrderType: string
     public function label(): string
     {
         return match($this) {
-            self::NEW => 'Buy new Package',
-            self::EXTEND => 'Extend Package using time',
+            self::NEW => 'Get New',
+            self::EXTEND => 'Extend Using Date',
         };
     }
 

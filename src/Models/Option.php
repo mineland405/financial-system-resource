@@ -23,4 +23,9 @@ class Option extends Model
         'value',
         'page_id'
     ];
+
+    public function getValue($name)
+    {
+        return $this->where('name', $name)->where('page_id', _master_page_id())->first()->value ?? null;
+    }
 }

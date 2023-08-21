@@ -72,7 +72,7 @@ class Member extends Authenticatable implements MustVerifyEmail
     {
         if(is_admin())
             return $query;
-        return $query->where('page_id', Auth::guard('master')->user()->hasMasterPage->id);
+        return $query->where('page_id', Auth::user()->hasMasterPage->id);
     }
 
     public function scopeActive()

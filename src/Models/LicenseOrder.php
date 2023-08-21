@@ -5,33 +5,33 @@ namespace Mineland405\FinancialSystemResource\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use Mineland405\FinancialSystemResource\Enums\OrderPaymentMethod;
 use Mineland405\FinancialSystemResource\Enums\OrderStatus;
 use Mineland405\FinancialSystemResource\Enums\OrderStatusDescription;
 use Mineland405\FinancialSystemResource\Enums\OrderType;
 
-class Order extends Model
+class LicenseOrder extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $connection = 'mysql_main';
 
-    protected $table = 'orders';
+    protected $table = 'license_orders';
 
     protected $fillable = [
         'code',
         'member_id',
-        'package_id',
-        'package_type',
-        'package_code',
-        'package_name',
-        'package_quantity',
-        'package_price',
-        'package_server_fee',
+        'page_id',
+        'license_order_id',
+        'account_size',
+        'price',
+        'quantity',
         'payment_method',
-        'payment_expires_at',
+        'type',
         'status',
         'total',
+        'expires_at',
     ];
 
     public function filter()
@@ -40,9 +40,7 @@ class Order extends Model
 
         if(request()->filled('search')) {
             $query = $query->where(function($cond) {
-                return $cond->where('code', 'LIKE', _search_text(request()->search))
-                ->orWhere('package_code', 'LIKE', _search_text(request()->search))
-                ->orWhere('package_name', 'LIKE', _search_text(request()->search));
+                return $cond->where('code', 'LIKE', _search_text(request()->search));
             });
         }
 
@@ -127,18 +125,38 @@ class Order extends Model
         return $this->hasOne(Member::class, 'id', 'member_id');
     }
 
-    public function package()
-    {
-        return $this->hasOne(Package::class, 'id', 'product_package_id');
-    }
-
     public function statusTracking()
     {
-        return $this->hasMany(OrderStatusTracking::class, 'order_id')->where('order_type', 'package')->orderBy('id', 'asc');
+        return $this->hasMany(OrderStatusTracking::class, 'order_id')->where('order_type', 'license')->orderBy('id', 'asc');
     }
 
     public function masterPage()
     {
         return $this->hasOne(MasterPage::class, 'id', 'page_id')->whereNull('disabled_at')->whereNull('locked_at');
+    }
+
+    /**
+     * --------------------------------------------------------
+     * Func
+     * --------------------------------------------------------
+     */
+    public function store($data)
+    {
+        $record = $this->refresh();
+        $record->member_id = Auth::user()->id;
+        $record->page_id = _master_page_id(); 
+        $record->license_order_id = $data->license_order_id ?? NULL; 
+        $record->code = NULL; 
+        $record->account_size = $data->account_size; 
+        $record->quantity = $data->quantity; 
+        $record->price = $data->price;
+        $record->total = $data->total;
+        $record->payment_method = $data->payment_method; 
+        $record->status = $data->status ?? OrderStatus::PAID->value; 
+        $record->type = $data->type;
+        $record->expires_at = NULL; // Update when order COMPLETE
+        $record->save(); 
+
+        return $record;
     }
 }

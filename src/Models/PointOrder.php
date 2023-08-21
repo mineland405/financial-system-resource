@@ -47,6 +47,13 @@ class PointOrder extends Model
 		return PointOrderSource::options()[$this->source];
 	}
 
+    public function getOrderInfoAttribute()
+	{
+        if(_is_master_page())
+            return $this->licenseOrder;
+        return $this->order;
+	}
+
 
     /**
      * --------------------------------------------
@@ -68,6 +75,14 @@ class PointOrder extends Model
     public function order()
     {
         return $this->hasOne(Order::class, 'id', 'order_id');
+    }
+
+    /**
+     * Relationship to orders table by order_id
+     */
+    public function licenseOrder()
+    {
+        return $this->hasOne(LicenseOrder::class, 'id', 'order_id');
     }
 
     /**
