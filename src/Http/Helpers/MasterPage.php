@@ -41,7 +41,7 @@ if(!function_exists('_master_page_id')) {
      * Get id of Master Page
      */
     function _master_page_id() {
-        if(_is_subdomain() || !is_null(_page_id())) {
+        if(!is_null(_page_id())) {
             return MasterPage::isAvailable()->where('page_id', _page_id())->first()->id;
         }
         

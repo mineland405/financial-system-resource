@@ -26,9 +26,13 @@ class Model extends BaseModel
     {
         if(is_admin())
             return $query;
+        
+        // Is Master in Management Page
         if(is_master())
             return $query->where('page_id', Auth::guard('master')->user()->hasMasterPage->id);
-        return $query->where('page_id', Auth::user()->hasMasterPage->id);
+
+        // In Sale Page
+        return $query->where('page_id', _master_page_id() ?? NULL);
     }
 
     public function scopeOfMember($query)

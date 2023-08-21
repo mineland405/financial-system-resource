@@ -40,16 +40,6 @@ class Package extends Model
         return $this->disabled == 0;
     }
 
-    public function getSellingPriceAttribute()
-    {
-        return $this->packagePricing ? $this->packagePricing->price : $this->price;
-    }
-
-    public function getOriginPriceAttribute()
-    {
-        return $this->price;
-    }
-
     /**
      * ----------------------------------------------
      * Relationships
@@ -69,19 +59,6 @@ class Package extends Model
      * Funcs
      * ----------------------------------------------
      */
-
-    /**
-     * Call this func to restruct the price by new price
-     * price: use for all feature for caculate total price
-     * origin_price: price in system
-     * selling_price: price of master ib
-     */
-    public function restructPrice()
-    {
-        $this->price = $this->selling_price;
-
-        return $this;
-    }
 
     public function filter()
     {

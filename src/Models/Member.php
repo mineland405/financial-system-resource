@@ -70,9 +70,7 @@ class Member extends Authenticatable implements MustVerifyEmail
 
     public function scopeOfMasterPage($query)
     {
-        if(is_admin())
-            return $query;
-        return $query->where('page_id', Auth::user()->hasMasterPage->id);
+        return $query->where('page_id', Auth::user()->hasMasterPage->id ?? NULL);
     }
 
     public function scopeActive()
@@ -137,7 +135,7 @@ class Member extends Authenticatable implements MustVerifyEmail
      */
     public function hasMasterPage()
     {
-        return $this->hasOne(MasterPage::class, 'member_id', 'id')->whereNull('disabled_at')->whereNull('locked_at')->latestOfMany();
+        return $this->hasOne(MasterPage::class, 'member_id', 'id')->whereNull('disabled_at')->whereNull('locked_at');
     }
 
     /**
